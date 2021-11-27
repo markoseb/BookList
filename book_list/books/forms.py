@@ -1,15 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateTimeField, IntegerField
+from wtforms import StringField, SubmitField, DateTimeField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 from flask import flash
 from book_list.models import Book
 import datetime
 
+dt_string = "2020-12-18"
+format = "%Y-%m-%d"
+dt_object = datetime.datetime.strptime(dt_string, format)
+
 
 class BookForm(FlaskForm):
-    dt_string = "2020-12-18"
-    format = "%Y-%m-%d"
-    dt_object = datetime.datetime.strptime(dt_string, format)
     title = StringField('Tytuł', validators=[DataRequired()])
     author = StringField('Autor', validators=[DataRequired()])
     pub_date = DateTimeField('Data Publikacji', validators=[DataRequired()], default=dt_object, format=format)
@@ -25,3 +26,11 @@ class BookForm(FlaskForm):
             flash('Książka o podanym ISBN już istnieje!')
             return False
         return True
+
+
+class SearchBookForm(FlaskForm):
+    valuesType = SelectField('Wybierz kryterium', choices=[('all', 'Brak'), ('title', 'Tytuł'), ('author', 'Autor'), ('lan', 'Język')])
+    val = StringField('Wartość', validators=[DataRequired()])
+    start_date = DateTimeField('Od: ', validators=[DataRequired()], default=dt_object, format=format)
+    end_date = DateTimeField('Do:', validators=[DataRequired()], default=dt_object, format=format)
+    submit = SubmitField('refresh')
