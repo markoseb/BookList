@@ -54,3 +54,13 @@ def update(book_id):
         form.pages_number.data = book.pages_number
 
     return render_template('addbook.html', form=form)
+
+
+@books.route('/book/<int:book_id>/delete', methods=["POST"])
+def delete(book_id):
+    book = Book.query.get_or_404(book_id)
+
+    db.session.delete(book)
+    db.session.commit()
+    flash('Usuniętą Książkę')
+    return redirect(url_for('core.index'))

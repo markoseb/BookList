@@ -14,6 +14,7 @@
                 <th scope="col">Numer Stron</th>
                 <th scope="col">Okładka</th>
                 <th scope="col">Język</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -27,6 +28,11 @@
                     <td>{{ book.pages_number }}</td>
                     <td><a href="{{ book.link }}">link</a></td>
                     <td>{{ book.lan }}</td>
+                    <td>
+                        <form action="{{ url_for('books.delete',book_id=book.id) }}" method="POST">
+                            <button type="submit" class="btn btn-danger btn-sm"><i aria-hidden="true"></i>X</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
