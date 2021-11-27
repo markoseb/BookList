@@ -1,50 +1,44 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
-    <form>
+    <form method="POST">
+        {{ form.hidden_tag() }}
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                {{ wtf.form_field(form.title, class="form-control") }}
             </div>
             <div class="form-group col-md-6">
-                <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                {{ wtf.form_field(form.author, class="form-control") }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(form.img, class="form-control") }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(form.lan, class="form-control") }}
             </div>
         </div>
-        <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="form-group">
-            <label for="inputAddress2">Address 2</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
+
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
+                {{ wtf.form_field(form.pub_date, class="form-control") }}
             </div>
-            <div class="form-group col-md-4">
-                <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
+            <div class="form-group col-md-3">
+                {{ wtf.form_field(form.isbn, class="form-control") }}
             </div>
-            <div class="form-group col-md-2">
-                <label for="inputZip">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
+            <div class="form-group col-md-3">
+                {{ wtf.form_field(form.pages_number, class="form-control") }}
             </div>
         </div>
-        <div class="form-group">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
-            </div>
+
+        {{ form.submit(class="btn btn-primary") }}
+
+        <div class="help-block">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning" style="background-color: #fbf2eb;">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
 {% endblock content %}

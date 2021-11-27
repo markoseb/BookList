@@ -9,7 +9,7 @@ class Book(db.Model):
     title = db.Column(db.String(140), unique=True)
     author = db.Column(db.String(140), nullable=False)
     pub_date = db.Column(db.DateTime, nullable=False)
-    isbn = db.Column(db.CHAR(13), unique=True, nullable=False)
+    isbn = db.Column(db.CHAR(17), unique=True, nullable=False)
     pages_number = db.Column(db.Integer(), nullable=False)
     link = db.Column(db.NVARCHAR(), nullable=False)
     lan = db.Column(db.CHAR(5), nullable=False)

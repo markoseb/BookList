@@ -10,14 +10,15 @@ books = Blueprint('books', __name__)
 def add_book():
     form = BookForm()
 
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.check_isbn():
         book = Book(
             title=form.title.data,
             author=form.author.data,
             pub_date=form.pub_date.data,
             isbn=form.isbn.data,
             link=form.img.data,
-            language=form.lan.data)
+            language=form.lan.data,
+            pages=form.pages_number.data)
 
         db.session.add(book)
         db.session.commit()
