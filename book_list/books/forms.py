@@ -15,7 +15,7 @@ class BookForm(FlaskForm):
     author = StringField('Autor', validators=[DataRequired()])
     pub_date = DateTimeField('Data Publikacji', validators=[DataRequired()], default=dt_object, format=format)
     isbn = StringField('ISBN', validators=[DataRequired()], default="978-1-56619-909-4")
-    pages_number = IntegerField('Numer Stron', validators=[DataRequired()])
+    pages_number = IntegerField('Ilość Stron', validators=[DataRequired()])
     img = StringField('Okładka', validators=[DataRequired()],
                       default="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FkkVGBn-haDo%2Fmaxresdefault.jpg&f=1&nofb=1")
     lan = StringField('Język', validators=[DataRequired()], default="pl")

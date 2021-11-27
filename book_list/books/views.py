@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, Blueprint, request
 from book_list import db
 from book_list.models import Book
-from book_list.books.forms import BookForm,SearchBookForm
+from book_list.books.forms import BookForm, SearchBookForm
 
 books = Blueprint('books', __name__)
 

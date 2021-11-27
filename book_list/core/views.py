@@ -11,7 +11,6 @@ def index_redirect():
 
 
 def search_book(i, val, books):
-
     switcher = {
 
         "title": books.filter(Book.title.like('%' + val + '%')),
