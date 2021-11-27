@@ -3,7 +3,6 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from book_list.core.views import core
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -25,4 +24,8 @@ db = SQLAlchemy(app)
 
 Migrate(app, db)
 
+from book_list.core.views import core
+from book_list.books.views import books
+
 app.register_blueprint(core)
+app.register_blueprint(books)
