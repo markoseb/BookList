@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, redirect, request
-from book_list.models import Book
+
 from book_list.books.forms import SearchBookForm
+from book_list.models import Book
 
 core = Blueprint('core', __name__)
 
@@ -40,7 +41,9 @@ def index():
         name = searchform.valuesType.data
         books = search_book(name, val, books)
         if searchform.use_data.data:
-            print("Data use")
+            data_str = searchform.start_date.data
+            data_end = searchform.end_date.data
+            books = books.filter(Book.pub_date.between(data_str, data_end))
 
     books = books.order_by(Book.id).paginate(page=page, per_page=100)
     return render_template('index.html', books=books, searchform=searchform)
