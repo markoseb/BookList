@@ -39,5 +39,8 @@ def index():
         val = searchform.val.data
         name = searchform.valuesType.data
         books = search_book(name, val, books)
+        if searchform.use_data.data:
+            print("Data use")
+
     books = books.order_by(Book.id).paginate(page=page, per_page=100)
     return render_template('index.html', books=books, searchform=searchform)

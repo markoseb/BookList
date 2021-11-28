@@ -5,15 +5,25 @@
 
     <form method="POST">
         {{ searchform.hidden_tag() }}
-        <div class="form-row">
+        <div class="m-4 form-row">
             <div class="form-group col-md-6">
                 {{ wtf.form_field(searchform.valuesType, class="form-control") }}
             </div>
             <div class="form-group col-md-6">
                 {{ wtf.form_field(searchform.val, class="form-control") }}
             </div>
+            <div class="form-group col-md-12">
+                {{ wtf.form_field(searchform.use_data, class="form-control") }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(searchform.start_date, class="form-control") }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(searchform.end_date, class="form-control") }}
+            </div>
+            {{ searchform.submit(class="btn btn-primary") }}
         </div>
-        {{ searchform.submit(class="btn btn-primary") }}
+
     </form>
 
     <div class="table-responsive">

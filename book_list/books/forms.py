@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateTimeField, IntegerField, SelectField
+from wtforms import StringField, SubmitField, DateTimeField, IntegerField, SelectField, BooleanField
 from wtforms.validators import DataRequired
 from flask import flash
 from book_list.models import Book
@@ -31,6 +31,7 @@ class BookForm(FlaskForm):
 class SearchBookForm(FlaskForm):
     valuesType = SelectField('Wybierz kryterium', choices=[('all', 'Brak'), ('title', 'Tytuł'), ('author', 'Autor'), ('lan', 'Język')])
     val = StringField('Wartość', validators=[DataRequired()])
+    use_data = BooleanField("Sprawdź date wydania", default=False)
     start_date = DateTimeField('Od: ', validators=[DataRequired()], default=dt_object, format=format)
     end_date = DateTimeField('Do:', validators=[DataRequired()], default=dt_object, format=format)
     submit = SubmitField('refresh')
