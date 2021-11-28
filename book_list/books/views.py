@@ -62,5 +62,5 @@ def delete(book_id):
 
     db.session.delete(book)
     db.session.commit()
-    flash('Usuniętą Książkę')
+    flash('Usunięto Książkę')
     return redirect(url_for('core.index'))
