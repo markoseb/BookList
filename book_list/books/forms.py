@@ -32,7 +32,10 @@ class BookForm(FlaskForm):
 
 class SearchBookForm(FlaskForm):
     valuesType = SelectField('Wybierz kryterium',
-                             choices=[('all', 'Brak'), ('title', 'Tytuł'), ('author', 'Autor'), ('lan', 'Język')])
+                             choices=[('all', 'Brak'),
+                                      ('title', 'Tytuł'),
+                                      ('author', 'Autor'),
+                                      ('lan', 'Język')])
     val = StringField('Wartość')
     use_data = BooleanField("Sprawdź date wydania", default=False)
     start_date = DateTimeField('Od: ', validators=[DataRequired()], default=dt_object, format=format)

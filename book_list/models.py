@@ -6,12 +6,12 @@ class Book(db.Model):
     __tablename__ = 'books'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(140), unique=True)
+    title = db.Column(db.String(140), nullable=False)
     author = db.Column(db.String(140), nullable=False)
-    pub_date = db.Column(db.DateTime, nullable=False)
+    pub_date = db.Column(db.DateTime)
     isbn = db.Column(db.CHAR(17), unique=True, nullable=False)
-    pages_number = db.Column(db.Integer(), nullable=False)
-    link = db.Column(db.NVARCHAR(), nullable=False)
+    pages_number = db.Column(db.Integer())
+    link = db.Column(db.NVARCHAR())
     lan = db.Column(db.CHAR(5), nullable=False)
 
     def __init__(self, title, author, pub_date, isbn, pages, link, language):

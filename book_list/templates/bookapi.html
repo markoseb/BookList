@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="m-4 form-row">
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(form.search, class="form-control") }}
+            </div>
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <caption>Lista Książek</caption>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Data Publikacji</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Numer Stron</th>
+                <th scope="col">Okładka</th>
+                <th scope="col">Język</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <th scope="row"><a>{{ book.id }}</a></th>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.pub_date }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.pages_number }}</td>
+                    <td><a href="{{ book.link }}">link</a></td>
+                    <td>{{ book.lan }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
