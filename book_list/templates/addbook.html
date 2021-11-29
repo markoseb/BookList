@@ -31,14 +31,5 @@
         </div>
 
         {{ form.submit(class="btn btn-primary") }}
-
-        <div class="help-block">
-            {% for message in get_flashed_messages() %}
-                <div class="alert alert-warning" style="background-color: #fbf2eb;">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
     </form>
 {% endblock content %}

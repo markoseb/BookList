@@ -1,6 +1,8 @@
 import requests
-from flask import render_template, Blueprint
+from dateutil import parser as dataparser
+from flask import render_template, Blueprint, redirect, url_for, flash
 
+from book_list import db
 from book_list.book_api.forms import BookApiForm
 from book_list.models import Book
 
@@ -25,7 +27,7 @@ def bookDecoder(obj):
         "author": "Brak danych",
         "pub_date": "",
         "isbn": "Brak danych",
-        "link": "",
+        "link": "empty",
         "language": "Brak danych",
         "pages": 0
     }
@@ -53,7 +55,7 @@ def bookDecoder(obj):
     book = Book(
         title=bookdict['title'],
         author=bookdict['author'],
-        pub_date=bookdict['pub_date'],
+        pub_date=dataparser.parse(bookdict['pub_date']),
         isbn=bookdict['isbn'],
         link=bookdict['link'],
         language=bookdict['language'],
@@ -65,14 +67,43 @@ def bookDecoder(obj):
 @book_api.route('/bookapi', methods=['GET', 'POST'])
 def search():
     form = BookApiForm()
+    deactivated_add = False
     books = []
 
     if form.validate_on_submit():
         bk = gbooks()
         result = bk.search(form.search.data)
-
+        deactivated_add = True
         for jsnbook in result:
             book = bookDecoder(jsnbook)
             books.append(book)
+        if form.submit_add.data:
+            for el in books:
+                if Book.query.filter_by(isbn=el.isbn).first():
+                    flash(f"Książka o podanym ISBN = {el.isbn} już istnieje!")
+                else:
+                    db.session.add(el)
+                    db.session.commit()
 
-    return render_template('bookapi.html', form=form, books=books)
+    return render_template('bookapi.html', form=form, books=books, deactivated=deactivated_add)
+
+
+@book_api.route('/book/<string:book_parm>/delete', methods=['GET', 'POST'])
+def add(book_parm):
+    # book = Book(
+    #     title=book_parm[0],
+    #     author=book_parm[1],
+    #     pub_date=dataparser.parse(book_parm[2]),
+    #     isbn=book_parm[3],
+    #     pages=book_parm[4],
+    #     link=book_parm[5],
+    #     language=book_parm[6])
+    # db.session.add(book)
+    # db.session.commit()
+
+    # Python code to convert string to list
+
+    # li = book_parm.split(",")
+
+    print(book_parm)
+    return redirect(url_for('core.index'))

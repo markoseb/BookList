@@ -25,7 +25,7 @@ class BookForm(FlaskForm):
 
     def check_isbn(self):
         if Book.query.filter_by(isbn=self.isbn.data).first():
-            flash('Książka o podanym ISBN już istnieje!')
+            flash(f"Książka o podanym ISBN = {self.isbn.data} już istnieje!")
             return False
         return True
 

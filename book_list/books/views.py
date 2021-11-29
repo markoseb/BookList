@@ -1,7 +1,8 @@
 from flask import render_template, url_for, flash, redirect, Blueprint, request
+
 from book_list import db
+from book_list.books.forms import BookForm
 from book_list.models import Book
-from book_list.books.forms import BookForm, SearchBookForm
 
 books = Blueprint('books', __name__)
 
@@ -22,7 +23,7 @@ def add_book():
 
         db.session.add(book)
         db.session.commit()
-        flash("Dodano książkę!")
+        # flash("Dodano książkę!")
         return redirect(url_for('core.index'))
 
     return render_template('addbook.html', form=form)
@@ -42,7 +43,7 @@ def update(book_id):
         book.lan = form.lan.data
         book.pages_number = form.pages_number.data
         db.session.commit()
-        flash("Zmiana zatwierdzona!")
+        # flash("Zmiana zatwierdzona!")
         return redirect(url_for('core.index'))
     elif request.method == 'GET':
         form.title.data = book.title
@@ -62,5 +63,5 @@ def delete(book_id):
 
     db.session.delete(book)
     db.session.commit()
-    flash('Usunięto Książkę')
+    # flash('Usunięto Książkę')
     return redirect(url_for('core.index'))
