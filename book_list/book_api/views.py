@@ -1,7 +1,6 @@
 import requests
 from dateutil import parser as dataparser
 from flask import render_template, Blueprint, redirect, url_for, flash
-
 from book_list import db
 from book_list.book_api.forms import BookApiForm
 from book_list.models import Book
@@ -10,7 +9,7 @@ book_api = Blueprint('book_api', __name__)
 
 
 class gbooks():
-    googleapikey = "xxx"
+    googleapikey = "XXX"
 
     def search(self, value):
         parms = {"q": value, 'key': self.googleapikey}
@@ -88,22 +87,27 @@ def search():
     return render_template('bookapi.html', form=form, books=books, deactivated=deactivated_add)
 
 
-@book_api.route('/book/<string:book_parm>/delete', methods=['GET', 'POST'])
-def add(book_parm):
+@book_api.route('/book/delete', methods=['GET', 'POST'])
+def add():
+    flash(f"Ta funkcja jeszcze nie działa! Wypróbuj dodaj wszystkie")
+    # # Python code to convert string to list
+    #
+    # book_parm = book_parm.split("---")
+    # bookstr=[]
+    # for parm in book_parm :
+    #     splitparm = parm.split("::")
+    #     for p in splitparm:
+    #         bookstr.append(p)
+    #
     # book = Book(
-    #     title=book_parm[0],
-    #     author=book_parm[1],
-    #     pub_date=dataparser.parse(book_parm[2]),
-    #     isbn=book_parm[3],
-    #     pages=book_parm[4],
-    #     link=book_parm[5],
-    #     language=book_parm[6])
+    #     title=bookstr[2],
+    #     author=bookstr[4],
+    #     pub_date=dataparser.parse(bookstr[6]),
+    #     isbn=bookstr[8],
+    #     pages=bookstr[10],
+    #     link=bookstr[12],
+    #     language=bookstr[14])
     # db.session.add(book)
     # db.session.commit()
 
-    # Python code to convert string to list
-
-    # li = book_parm.split(",")
-
-    print(book_parm)
-    return redirect(url_for('core.index'))
+    return redirect(url_for('book_api.search'))

@@ -41,7 +41,7 @@
                     <td><a href="{{ book.link }}">link</a></td>
                     <td>{{ book.lan }}</td>
                     <td>
-                        <form action="{{ url_for('book_api.add', book_parm = book) }}"
+                        <form action="{{ url_for('book_api.add') }}"
                               method="POST">
                             <button type="submit" class="btn btn-primary btn-sm"><i aria-hidden="true"></i>Add</button>
                         </form>
