@@ -40,6 +40,7 @@
                 <th scope="col">Okładka</th>
                 <th scope="col">Język</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -56,6 +57,11 @@
                     <td>
                         <form action="{{ url_for('books.delete',book_id=book.id) }}" method="POST">
                             <button type="submit" class="btn btn-danger btn-sm"><i aria-hidden="true"></i>X</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('books.update', book_id=book.id) }}" >
+                            <button type="submit" class="btn btn-primary btn-sm"><i aria-hidden="true"></i>Edit</button>
                         </form>
                     </td>
                 </tr>
