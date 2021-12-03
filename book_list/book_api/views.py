@@ -10,7 +10,7 @@ book_api = Blueprint('book_api', __name__)
 
 
 class gbooks():
-    googleapikey = "AIzaSyDI-jiaDDiO77DWJd1SdIa2kUWNHJ9Fa4A"
+    googleapikey = "XXX"
 
     def search(self, value):
         parms = {"q": value, 'key': self.googleapikey}
