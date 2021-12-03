@@ -1,15 +1,16 @@
-import requests
+import requests, json
 from dateutil import parser as dataparser
-from flask import render_template, Blueprint, redirect, url_for, flash
+from flask import render_template, Blueprint, flash, request, session
 from book_list import db
 from book_list.book_api.forms import BookApiForm
 from book_list.models import Book
+
 
 book_api = Blueprint('book_api', __name__)
 
 
 class gbooks():
-    googleapikey = "xxx"
+    googleapikey = "AIzaSyDI-jiaDDiO77DWJd1SdIa2kUWNHJ9Fa4A"
 
     def search(self, value):
         parms = {"q": value, 'key': self.googleapikey}
@@ -22,45 +23,34 @@ def bookDecoder(obj):
     obj = obj["volumeInfo"]
 
     bookdict = {
-        "title": "Brak danych",
-        "author": "Brak danych",
-        "pub_date": "",
-        "isbn": "Brak danych",
-        "link": "empty",
-        "language": "Brak danych",
-        "pages": 0
+        "title"     :        obj.get('title', "Brak danych"),
+        "author"    :        ','.join(obj.get('authors', [])),
+        "pub_date"  :        obj.get('publishedDate', ""),
+        "isbn"      :        "Brak danych",
+        "link"      :        "empty",
+        "language"  :        obj.get('language', ""),
+        "pages"     :        0,
     }
-    if 'title' in obj:
-        bookdict['title'] = obj['title']
+    try:
+        bookdict.update({
+            'isbn'  : obj['industryIdentifiers'][0]['identifier'],
+        })
+    except:
+        pass
 
-    if 'authors' in obj:
-        bookdict['author'] = ''.join(obj['authors'])
+    try:
+        bookdict.update({
+            'link'  : obj["imageLinks"]["thumbnail"],
+        })
+    except:
+        pass
 
-    if 'publishedDate' in obj:
-        bookdict['pub_date'] = obj['publishedDate']
+    try:
+        bookdict['pages'] = int(obj.get("pageCount",0))
+    except:
+        pass
 
-    if 'industryIdentifiers' in obj and 'identifier' in obj['industryIdentifiers'][0]:
-        bookdict['isbn'] = obj['industryIdentifiers'][0]['identifier']
-
-    if 'language' in obj:
-        bookdict['language'] = obj['language']
-
-    if 'pageCount' in obj:
-        bookdict['pages'] = int(obj['pageCount'])
-
-    if 'imageLinks' in obj and 'thumbnail' in obj['imageLinks']:
-        bookdict['link'] = obj["imageLinks"]["thumbnail"]
-
-    book = Book(
-        title=bookdict['title'],
-        author=bookdict['author'],
-        pub_date=dataparser.parse(bookdict['pub_date']),
-        isbn=bookdict['isbn'],
-        link=bookdict['link'],
-        language=bookdict['language'],
-        pages=bookdict['pages'])
-
-    return book
+    return bookdict
 
 
 @book_api.route('/bookapi', methods=['GET', 'POST'])
@@ -68,46 +58,54 @@ def search():
     form = BookApiForm()
     deactivated_add = False
     books = []
-
+    session.invalidate()
     if form.validate_on_submit():
         bk = gbooks()
         result = bk.search(form.search.data)
         deactivated_add = True
-        for jsnbook in result:
-            book = bookDecoder(jsnbook)
+        for dictbook in result:
+            book = bookDecoder(dictbook)
             books.append(book)
-        if form.submit_add.data:
+        if form.submit_all.data:
             for el in books:
-                if Book.query.filter_by(isbn=el.isbn).first():
+                if Book.query.filter_by(isbn=el['isbn']).first():
                     flash(f"Książka o podanym ISBN = {el.isbn} już istnieje!")
                 else:
-                    db.session.add(el)
+                    bookdb = Book(
+                        title=el['title'],
+                        author=el['author'],
+                        pub_date=dataparser.parse(el['pub_date']),
+                        isbn=el['isbn'],
+                        pages=el['link'],
+                        link=el['language'],
+                        language=el['pages'])
+                    db.session.add(bookdb)
                     db.session.commit()
-
+    session['books']            = books
+    session['deactivated_add'] = deactivated_add
     return render_template('bookapi.html', form=form, books=books, deactivated=deactivated_add)
 
 
-@book_api.route('/book/delete', methods=['GET', 'POST'])
-def add():
-    flash(f"Ta funkcja jeszcze nie działa! Wypróbuj dodaj wszystkie")
-    # # Python code to convert string to list
-    #
-    # book_parm = book_parm.split("---")
-    # bookstr=[]
-    # for parm in book_parm :
-    #     splitparm = parm.split("::")
-    #     for p in splitparm:
-    #         bookstr.append(p)
-    #
-    # book = Book(
-    #     title=bookstr[2],
-    #     author=bookstr[4],
-    #     pub_date=dataparser.parse(bookstr[6]),
-    #     isbn=bookstr[8],
-    #     pages=bookstr[10],
-    #     link=bookstr[12],
-    #     language=bookstr[14])
-    # db.session.add(book)
-    # db.session.commit()
+@book_api.route('/book/<string:book_id>/add', methods=['GET', 'POST'])
+def add(book_id):
 
-    return redirect(url_for('book_api.search'))
+    if request.method == 'POST':
+        for book in session.get('books', None):
+            if book.get("isbn", 'default_value') == book_id:
+                print(book)
+                bookdb = Book(
+                    title         = book['title'],
+                    author        = book['author'],
+                    pub_date      = dataparser.parse(book['pub_date']),
+                    isbn          = book['isbn'],
+                    pages         = book['link'],
+                    link          = book['language'],
+                    language      = book['pages'])
+                db.session.add(bookdb)
+                db.session.commit()
+
+    return render_template('bookapi.html',
+                           form=BookApiForm(),
+                           books=session.get('books', None),
+                           deactivated=session.get('deactivated_add',False))
+
