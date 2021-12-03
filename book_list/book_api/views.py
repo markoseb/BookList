@@ -58,7 +58,6 @@ def search():
     form = BookApiForm()
     deactivated_add = False
     books = []
-    session.invalidate()
     if form.validate_on_submit():
         bk = gbooks()
         result = bk.search(form.search.data)
