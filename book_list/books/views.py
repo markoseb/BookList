@@ -11,15 +11,15 @@ books = Blueprint('books', __name__)
 def add_book():
     form = BookForm()
 
-    if form.validate_on_submit() and form.check_isbn():
+    if form.validate_on_submit() and form.check_isbn() and form.check_pages():
         book = Book(
-            title=form.title.data,
-            author=form.author.data,
-            pub_date=form.pub_date.data,
-            isbn=form.isbn.data,
-            link=form.img.data,
-            language=form.lan.data,
-            pages=form.pages_number.data)
+            title       = form.title.data,
+            author      = form.author.data,
+            pub_date    = form.pub_date.data,
+            isbn        = form.isbn.data,
+            link        = form.img.data,
+            language    = form.lan.data,
+            pages       = form.pages_number.data)
 
         db.session.add(book)
         db.session.commit()
@@ -34,25 +34,25 @@ def update(book_id):
     # grab the requested blog post by id number or return 404
     book = Book.query.get_or_404(book_id)
     form = BookForm()
-    if form.validate_on_submit():
-        book.title = form.title.data
-        book.author = form.author.data
-        book.pub_date = form.pub_date.data
-        book.isbn = form.isbn.data
-        book.link = form.img.data
-        book.lan = form.lan.data
-        book.pages_number = form.pages_number.data
+    if form.validate_on_submit() and form.check_isbn() and form.check_pages():
+        book.title          = form.title.data
+        book.author         = form.author.data
+        book.pub_date       = form.pub_date.data
+        book.isbn           = form.isbn.data
+        book.link           = form.img.data
+        book.lan            = form.lan.data
+        book.pages_number   = form.pages_number.data
         db.session.commit()
         # flash("Zmiana zatwierdzona!")
         return redirect(url_for('core.index'))
     elif request.method == 'GET':
-        form.title.data = book.title
-        form.author.data = book.author
-        form.pub_date.data = book.pub_date
-        form.isbn.data = book.isbn
-        form.img.data = book.link
-        form.lan.data = book.lan
-        form.pages_number.data = book.pages_number
+        form.title.data         = book.title
+        form.author.data        = book.author
+        form.pub_date.data      = book.pub_date
+        form.isbn.data          = book.isbn
+        form.img.data           = book.link
+        form.lan.data           = book.lan
+        form.pages_number.data  = book.pages_number
 
     return render_template('addbook.html', form=form)
 

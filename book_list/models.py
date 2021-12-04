@@ -1,6 +1,6 @@
 from book_list import db
-
-
+from dateutil import parser as dataparser
+from flask import flash
 class Book(db.Model):
     # Create a table in the db
     __tablename__ = 'books'
@@ -17,11 +17,17 @@ class Book(db.Model):
     def __init__(self, title, author, pub_date, isbn, pages, link, language):
         self.title          = title
         self.author         = author
-        self.pub_date       = pub_date
+        self.pub_date       = dataparser.parse(pub_date)
         self.isbn           = isbn
         self.pages_number   = pages
         self.link           = link
         self.lan            = language
+
+        if self.query.filter_by(isbn=self.isbn).first():
+            flash(f"Książka o podanym ISBN = {self.isbn} już istnieje!")
+        else:
+            db.session.add(self)
+            db.session.commit()
 
     def __repr__(self):
         return f"Book Id: {self.id} --- Title: {self.title} --- Author: {self.author}"
