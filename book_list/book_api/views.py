@@ -26,7 +26,7 @@ def bookDecoder(obj):
         "pub_date"  :        obj.get('publishedDate', ""),
         "isbn"      :        "Brak danych",
         "link"      :        "empty",
-        "language"  :        obj.get('language', ""),
+        "lan"       :        obj.get('language', ""),
         "pages"     :        0,
     }
     try:
@@ -65,7 +65,8 @@ def search():
             books.append(book)
         if form.submit_all.data:
             for el in books:
-                Book(**el)
+                Book(**el).save_to_db()
+
 
     session['books']           = books
     session['deactivated_add'] = deactivated_add
@@ -77,7 +78,7 @@ def add(book_id):
     if request.method == 'POST':
         for book in session.get('books', None):
             if book.get("isbn", 'default_value') == book_id:
-                Book(**book)
+                Book(**book).save_to_db()
 
     return render_template('bookapi.html',
                            form=BookApiForm(),

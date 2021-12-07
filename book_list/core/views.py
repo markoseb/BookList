@@ -24,7 +24,7 @@ def search_book(i, val, books):
 
     }
 
-    return switcher.get(i, "Brak wyników!")
+    return switcher.get(i, books)
 
 
 @core.route('/', methods=['GET', 'POST'])

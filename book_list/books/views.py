@@ -20,9 +20,7 @@ def add_book():
             link        = form.img.data,
             language    = form.lan.data,
             pages       = form.pages_number.data)
-
-        db.session.add(book)
-        db.session.commit()
+        book.save_to_db()
         # flash("Dodano książkę!")
         return redirect(url_for('core.index'))
 
@@ -61,7 +59,6 @@ def update(book_id):
 def delete(book_id):
     book = Book.query.get_or_404(book_id)
 
-    db.session.delete(book)
-    db.session.commit()
+    book.delete_from_db()
     # flash('Usunięto Książkę')
     return redirect(url_for('core.index'))
