@@ -47,9 +47,11 @@ class Book(db.Model):
     def save_to_db(self):
         if self.query.filter_by(isbn=self.isbn).first():
             flash(f"Książka o podanym ISBN = {self.isbn} już istnieje!")
+            return False
         else:
             db.session.add(self)
             db.session.commit()
+            return True
 
 
     def delete_from_db(self):

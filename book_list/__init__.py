@@ -37,7 +37,8 @@ app.register_blueprint(book_api)
 
 
 from flask_restful import Api
-from .rest_api.views import BookRest
+from .rest_api.views import BookSearch, BookAdd
 api = Api(app)
 
-api.add_resource(BookRest, '/bookrest')
+api.add_resource(BookSearch, "/booksearch/<string:title>/<string:author>/<string:lan>/<string:data_str>/<string:data_end>")
+api.add_resource(BookAdd, "/bookadd")

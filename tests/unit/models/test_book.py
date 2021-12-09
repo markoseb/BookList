@@ -1,9 +1,9 @@
-from unittest import TestCase
+from tests.unit.unit_base_test import UnitBaseTest
 from book_list.models import Book
 import datetime
 
 
-class BookTest(TestCase):
+class BookTest(UnitBaseTest):
     dt_string = "2020-12-18"
     format = "%Y-%m-%d"
     dt_object = datetime.datetime.strptime(dt_string, format)
