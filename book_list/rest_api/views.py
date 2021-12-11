@@ -4,7 +4,7 @@ from book_list.core.views import search_book
 from book_list.models import Book
 
 
-class BookAdd(Resource):
+class BookDb(Resource):
     parser = reqparse.RequestParser()
 
     parser.add_argument("title",
@@ -19,7 +19,7 @@ class BookAdd(Resource):
     parser.add_argument("isbn",
                         type=str,
                         help="Write isbn book code")
-    parser.add_argument("pages",
+    parser.add_argument("pages_number",
                         type=int,
                         help="Write pages number")
     parser.add_argument("link",
@@ -36,7 +36,7 @@ class BookAdd(Resource):
             pass
         book = Book(**args)
         if book.save_to_db():
-            return [{"Added new element": book.json()}]
+            return {'messege': 'Book created successfully'}
         return {'message': 'Failed with adding book! There is already book with that isbn number'}, 404
 
     def get(self):
@@ -59,7 +59,7 @@ class BookAdd(Resource):
 #   "pages": 0
 # }
 
-class BookSearch(Resource):
+class BookFilter(Resource):
 
     # bookrest/wiedz/sap/pl/2000-12-18/2020-12-18
     def get(self, title, author, lan, data_str, data_end):

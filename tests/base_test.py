@@ -7,8 +7,7 @@ and makes sure that it is a new, blank database each time.
 """
 
 from unittest import TestCase
-from book_list import app
-from book_list import db
+from book_list import app, db
 import os
 
 
@@ -18,6 +17,8 @@ class BaseTest(TestCase):
     def setUpClass(cls):
         basedir = os.path.abspath(os.path.dirname(__file__))
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test_data.sqlite')
+        app.config['DEBUG'] = False
+        app.config['PROPAGATE_EXPETIONS'] = True
         with app.app_context():
             db.init_app(app)
 

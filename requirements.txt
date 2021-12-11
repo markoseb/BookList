@@ -1,0 +1,38 @@
+alembic @ file:///home/conda/feedstock_root/build_artifacts/alembic_1636656371607/work
+aniso8601 @ file:///home/conda/feedstock_root/build_artifacts/aniso8601_1618789466884/work
+brotlipy==0.7.0
+certifi==2021.10.8
+cffi @ file:///C:/ci/cffi_1600699246375/work
+chardet==3.0.4
+click==7.1.2
+cryptography @ file:///C:/ci/cryptography_1601046905460/work
+dominate @ file:///home/conda/feedstock_root/build_artifacts/dominate_1622404657073/work
+Flask==1.1.2
+Flask-Bootstrap==3.3.7.1
+Flask-Migrate @ file:///home/conda/feedstock_root/build_artifacts/flask-migrate_1627821482519/work
+Flask-RESTful @ file:///home/conda/feedstock_root/build_artifacts/flask-restful_1622406740831/work
+Flask-SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/flask-sqlalchemy_1616102249273/work
+Flask-WTF==0.14.3
+greenlet @ file:///D:/bld/greenlet_1635836951138/work
+idna @ file:///tmp/build/80754af9/idna_1593446292537/work
+importlib-metadata @ file:///D:/bld/importlib-metadata_1636431708851/work
+importlib-resources @ file:///home/conda/feedstock_root/build_artifacts/importlib_resources_1635615662634/work
+itsdangerous==1.1.0
+Jinja2==2.11.2
+Mako @ file:///home/conda/feedstock_root/build_artifacts/mako_1637170539581/work
+MarkupSafe==1.1.1
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
+PySocks==1.7.1
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1626286286081/work
+pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1633452062248/work
+requests @ file:///tmp/build/80754af9/requests_1592841827918/work
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+SQLAlchemy @ file:///D:/bld/sqlalchemy_1639086261785/work
+urllib3 @ file:///tmp/build/80754af9/urllib3_1603305693037/work
+visitor==0.1.3
+Werkzeug==1.0.1
+win-inet-pton==1.1.0
+wincertstore==0.2
+WTForms @ file:///tmp/build/80754af9/wtforms_1597707484216/work
+zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1633302054558/work

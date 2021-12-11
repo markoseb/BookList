@@ -11,7 +11,7 @@ books = Blueprint('books', __name__)
 def add_book():
     form = BookForm()
 
-    if form.validate_on_submit() and form.check_isbn() and form.check_pages():
+    if form.validate_on_submit() and form.check_form():
         book = Book(
             title       = form.title.data,
             author      = form.author.data,
@@ -32,7 +32,7 @@ def update(book_id):
     # grab the requested blog post by id number or return 404
     book = Book.query.get_or_404(book_id)
     form = BookForm()
-    if form.validate_on_submit() and form.check_isbn() and form.check_pages():
+    if form.validate_on_submit() and form.check_form():
         book.title          = form.title.data
         book.author         = form.author.data
         book.pub_date       = form.pub_date.data

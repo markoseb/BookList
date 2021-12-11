@@ -35,6 +35,15 @@ class BookForm(FlaskForm):
             return False
         return True
 
+    def check_data(self):
+        if self.pub_date > datetime.datetime.now():
+            flash(f"Podana data publikacji jest z przyszłości!")
+            return False
+        return True
+
+    def check_form(self):
+        return self.check_data() and self.check_isbn() and self.check_pages()
+
 
 class SearchBookForm(FlaskForm):
     valuesType = SelectField('Wybierz kryterium',

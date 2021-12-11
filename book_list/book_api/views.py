@@ -27,7 +27,7 @@ def bookDecoder(obj):
         "isbn"      :        "Brak danych",
         "link"      :        "empty",
         "lan"       :        obj.get('language', ""),
-        "pages"     :        0,
+        "pages_number"     :        0,
     }
     try:
         bookdict.update({
@@ -44,7 +44,7 @@ def bookDecoder(obj):
         pass
 
     try:
-        bookdict['pages'] = int(obj.get("pageCount",0))
+        bookdict['pages_number'] = int(obj.get("pageCount",0))
     except:
         pass
 

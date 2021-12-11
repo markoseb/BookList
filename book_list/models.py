@@ -1,3 +1,5 @@
+import datetime
+
 from book_list import db
 from dateutil import parser as dataparser
 from flask import flash
@@ -16,12 +18,12 @@ class Book(db.Model):
     link            = db.Column(db.NVARCHAR())
     lan             = db.Column(db.CHAR(5), nullable=False)
 
-    def __init__(self, title, author, pub_date, isbn, pages, link, lan):
+    def __init__(self, title, author, pub_date, isbn, pages_number, link, lan):
         self.title          = title
         self.author         = author
         self.pub_date       = dataparser.parse(pub_date)
         self.isbn           = isbn
-        self.pages_number   = pages
+        self.pages_number   = pages_number
         self.link           = link
         self.lan            = lan
 
@@ -45,8 +47,8 @@ class Book(db.Model):
         return cls.query.filter_by(isbn=isbn).first()
 
     def save_to_db(self):
-        if self.query.filter_by(isbn=self.isbn).first():
-            flash(f"Książka o podanym ISBN = {self.isbn} już istnieje!")
+        if self.query.filter_by(isbn=self.isbn).first() or self.pub_date > datetime.datetime.now():
+            flash(f"Książka o podanym ISBN = {self.isbn} już istnieje, lub wpisana data publikacji jest z przyszłości")
             return False
         else:
             db.session.add(self)
