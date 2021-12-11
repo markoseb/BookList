@@ -1,14 +1,14 @@
 # [BookListApi](https://github.com/markoseb/BeeBloge)
 
-####This is built with Flask, Flask-RESTful, WTForms, Flask-SQLAlchemy.
-####I also used [Google Books Apis](https://developers.google.com/books/docs/v1/using#WorkingVolumes)
+###This is built with Flask, Flask-RESTful, WTForms, Flask-SQLAlchemy.
+###I also used [Google Books Apis](https://developers.google.com/books/docs/v1/using#WorkingVolumes)
 Units, integration and system tests with unittest.TestCase
 
 ## Download and Installation
 
 To begin using this template:
 *	Download on [GitHub](https://github.com/markoseb/BookList)
-*	create env with all Packages in [requirements.txt](https://github.com/markoseb/BookList/requirements.txt)
+*	create env with all Packages in [requirements.txt](https://github.com/markoseb/BookList/blob/master/requirements.txt)
 
 
 ## Usage
