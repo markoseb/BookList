@@ -3,12 +3,12 @@ from flask import render_template, Blueprint, request, session
 
 from book_list.book_api.forms import BookApiForm
 from book_list.models import Book
-
+from book_list import config
 book_api = Blueprint('book_api', __name__)
 
 
 class gbooks():
-    googleapikey = "xxx"
+    googleapikey = config["GOOGLE_API"]["KEY"]
 
     def search(self, value):
         parms = {"q": value, 'key': self.googleapikey}
